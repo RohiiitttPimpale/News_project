@@ -2,8 +2,9 @@ import requests
 from pprint import pprint
 from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap5
+import os
 
-
+api_key = os.environ.get("API_KEY")
 
 app = Flask(__name__)
 bootstrap = Bootstrap5(app=app)
@@ -16,7 +17,7 @@ def home():
     if search_key:
         return redirect(url_for("search",search_value=search_key))
     parameter = {
-        "apiKey": "ceabec2ec6d44951ac7f21c806f1102b",
+        "apiKey": api_key,
         "language": "en",
     }
     response = requests.get("https://newsapi.org/v2/top-headlines", params=parameter)
@@ -29,7 +30,7 @@ def search(search_value):
     if search_key:
        return redirect(url_for("search", search_value=search_key))
     parameter = {
-        "apiKey": "ceabec2ec6d44951ac7f21c806f1102b",
+        "apiKey": api_key,
         "q": search_value
     }
     response = requests.get("https://newsapi.org/v2/everything", params=parameter)
